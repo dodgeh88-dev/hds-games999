@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MFMTWB2DBE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MFMTWB2DBE');
+    </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Some Stuff</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/style.css">
+  <link href="ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <!-- Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4429285203048093"
+     ></script>
+  <meta name="google-adsense-account" content="ca-pub-4429285203048093">
+  <style>
+    /* Ensure iframe container fills remaining viewport dynamically */
+    #pageFrameContainer {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--background-color, #1a1a2e);
+      z-index: 100;
+      overflow: hidden;
+      display: none;
+    }
+    #pageFrame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+    /* Ensure home page can be hidden and not hidden behind fixed navbar */
+    #home {
+      position: relative;
+      z-index: 50;
+      padding-top: 80px; /* ensures content not hidden behind navbar */
+    }
+    .page {
+      transition: opacity 0.3s ease;
+    }
+    .page.hidden {
+      display: none !important;
+    }
+    .navbar {
+      border-bottom: none !important;
+      margin-bottom: 0 !important;
+    }
+    /* Animated rolling digits style for live counter */
+    .live-counter-animated {
+      margin-top: 20px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 12px;
+      display: inline-block;
+      font-family: monospace, monospace;
+      color: #fff;
+      font-weight: 600;
+      padding: 15px 25px;
+      user-select: none;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      min-width: 280px;
+    }
+    .live-counter-animated p {
+      margin: 0 0 8px 0;
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+    }
+    .live-counter-animated p:last-child {
+      margin-bottom: 0;
+    }
+    .live-counter-animated .label {
+      flex: 1 0 140px;
+      font-weight: 600;
+      font-size: 1rem;
+      color: #ccc;
+    }
+    .digits {
+      display: flex;
+      gap: 4px;
+      perspective: 400px;
+    }
+    .digit {
+      position: relative;
+      width: 22px;
+      height: 32px;
+      overflow: hidden;
+      border-radius: 4px;
+      background: #222a4a;
+      box-shadow: inset 0 -4px 5px rgb(0 0 0 / 0.3);
+    }
+    .digit > div {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      font-size: 28px;
+      line-height: 32px;
+      text-align: center;
+      color: #7fffd4;
+      font-weight: 700;
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      backface-visibility: hidden;
+    }
+    .digit .current {
+      z-index: 2;
+      transform: rotateX(0deg);
+    }
+    .digit .next {
+      transform: rotateX(90deg);
+      z-index: 1;
+    }
+    .digit.flip .current {
+      transform: rotateX(-90deg);
+      transition-timing-function: cubic-bezier(0.4, 0, 1, 1);
+    }
+    .digit.flip .next {
+      transform: rotateX(0deg);
+      transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+      z-index: 2;
+    }
+      /* Dropdown menu styles */
+      .nav-item.dropdown {
+        position: relative;
+      }
+      .nav-item .dropdown-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: #1a1a2e;
+        list-style: none;
+        margin: 0;
+        padding: 6px 0;
+        border-radius: 6px;
+        min-width: 150px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        z-index: 999;
+      }
+      .nav-item .dropdown-menu li {
+        width: 100%;
+      }
+      .nav-item .dropdown-menu a {
+        display: block;
+        padding: 8px 16px;
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.9rem;
+        white-space: nowrap;
+      }
+      .nav-item .dropdown-menu a:hover {
+        background: rgba(255,255,255,0.1);
+      }
+      /* Show dropdown on open */
+      .nav-item.dropdown.open .dropdown-menu {
+        display: block;
+      }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="nav-logo">
+        <span class="logo-text">Some Stuff</span>
+        <span class="logo-subtitle">Educational Lessons by eg hhs</span>
+      </div>
+      <ul class="nav-menu">
+        <li class="nav-item"><a href="#home" class="nav-link active" data-page="home"><i class="fas fa-home"></i> Home</a></li>
+        <li class="nav-item"><a href="#gmes" class="nav-link" data-page="gmes"><i class="fas fa-gamepad"></i> Gmes</a></li>
+        <li class="nav-item"><a href="#prxy" class="nav-link" data-page="prxy"><i class="fas fa-shield-alt"></i> Prxy</a></li>
+        <li class="nav-item"><a href="#tv" class="nav-link" data-page="tv"><i class="fas fa-tv"></i> Live TV</a></li>
+        <li class="nav-item"><a href="#streaming" class="nav-link" data-page="streaming"><i class="fas fa-film"></i> Streaming</a></li>
+        <li class="nav-item dropdown" id="moreDropdown">
+          <a href="javascript:void(0);" class="nav-link" id="moreToggle">
+            <i class="fas fa-ellipsis-h"></i> <span id="moreLabel">More</span> <i class="fas fa-caret-down"></i>
+          </a>
+          <ul class="dropdown-menu" id="moreMenu">
+            <li><a href="#youtube" class="nav-link" data-page="youtube"><i class="fab fa-youtube"></i> YouTube</a></li>
+            <li><a href="#music" class="nav-link" data-page="music"><i class="fas fa-music"></i> Music</a></li>
+          </ul>
+        </li>
+      </ul>
+      <div class="hamburger">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </div>
+    </div>
+  </nav>
+  <!-- Home Page -->
+  <section id="home" class="page active">
+    <div class="hero">
+      <div class="hero-content">
+        <h1 class="hero-title">Welcome to <span class="gradient-text">Some Stuff</span></h1>
+        <p class="hero-description">Your ultimate destination for gmes, web prxies, and virtual machines</p>
+        <div class="hero-buttons">
+          <button class="btn btn-primary" onclick="showPage('gmes')"><i class="fas fa-play"></i> Start Gming</button>
+          <button class="btn btn-secondary" onclick="showPage('prxy')"><i class="fas fa-globe"></i> Browse Web</button>
+        </div>
+        <div class="live-counter-animated" aria-label="Live counters for today's views and unique users">
+          <p><span class="label">Today's Views:</span><span class="digits" id="viewCountDigits" aria-live="polite" aria-atomic="true"></span></p>
+          <p><span class="label">Unique Users:</span><span class="digits" id="userCountDigits" aria-live="polite" aria-atomic="true"></span></p>
+        </div>
+        <div class="policy-buttons" style="margin-top:20px; display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-secondary" onclick="showPage('privacy')">Privacy Policy</button>
+          <button class="btn btn-secondary" onclick="showPage('dmca')">DMCA</button>
+          <button class="btn btn-secondary" onclick="showPage('credits')">Credits</button>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="floating-card"><i class="fas fa-gamepad"></i></div>
+        <div class="floating-card"><i class="fas fa-shield-alt"></i></div>
+        <div class="floating-card"><i class="fas fa-desktop"></i></div>
+      </div>
+    </div>
+  </section>
+  <!-- External Page iframe container -->
+  <section id="pageFrameContainer" class="page hidden">
+    <iframe id="pageFrame" src="" frameborder="0"></iframe>
+  </section>
+  <!-- Hash-based page loader & nav -->
+  <script>
+    let accessRestricted = false;
+    let navLinks = []; // will be populated on DOMContentLoaded (only links that have data-page)
+    function showPage(pageId) {
+      console.log('Showing page:', pageId); // Debug log
+      if ((pageId === 'vm' || pageId === 'prxy') && accessRestricted) {
+        alert('Access to this page is restricted from your current network.');
+        // Prevent navigation to restricted page
+        // Keep current page displayed, do not change hash
+        return;
+      }
+      const home = document.getElementById('home');
+      const frameContainer = document.getElementById('pageFrameContainer');
+      const frame = document.getElementById('pageFrame');
+      if (pageId === 'home') {
+        home.classList.remove('hidden');
+        home.style.display = '';
+        frameContainer.classList.add('hidden');
+        frameContainer.style.display = 'none';
+        frame.src = '';
+        console.log('Switched to home page');
+      } else {
+        home.classList.add('hidden');
+        home.style.display = 'none';
+        frameContainer.classList.remove('hidden');
+        frameContainer.style.display = 'block';
+        adjustIframeHeight();
+        // Set the iframe source based on the page
+        let iframeSrc = '';
+        switch(pageId) {
+          case 'gmes':
+            iframeSrc = 'game.html';
+            break;
+          case 'vm':
+            iframeSrc = 'vm.html';
+            break;
+          case 'prxy':
+            iframeSrc = 'prxy.html';
+            break;
+          case 'tv':
+            iframeSrc = 'tv.html';
+            break;
+          case 'streaming':
+            iframeSrc = 'streaming.html';
+            break;
+          case 'youtube':
+            iframeSrc = 'youtube.html';
+            break;
+          case 'privacy':
+            iframeSrc = 'privacy.html';
+            break;
+          case 'dmca':
+            iframeSrc = 'dmca.html';
+            break;
+          case 'credits':
+            iframeSrc = 'credits.html';
+            break;
+          case 'music':
+            iframeSrc = 'musicplayer.html';
+            break;
+          default:
+            console.error('Unknown page:', pageId);
+            return;
+        }
+        frame.src = iframeSrc;
+        console.log('Loading iframe with src:', iframeSrc);
+        // Add loading indicator
+        frame.onload = function() {
+          console.log('Iframe loaded successfully');
+        };
+        frame.onerror = function() {
+          console.error('Failed to load iframe:', iframeSrc);
+        };
+      }
+      // Update navigation active states (navLinks is populated on DOMContentLoaded)
+      if (navLinks && navLinks.length) {
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.dataset.page === pageId);
+        });
+      }
+      // Update URL hash
+      window.location.hash = pageId;
+    }
+    function adjustIframeHeight() {
+      const navbar = document.querySelector('.navbar');
+      const frameContainer = document.getElementById('pageFrameContainer');
+      const frame = document.getElementById('pageFrame');
+      if (!navbar || !frameContainer || !frame) return;
+      const navbarHeight = navbar.offsetHeight;
+      const viewportHeight = window.innerHeight;
+      // Set frame container top and iframe height dynamically
+      frameContainer.style.top = navbarHeight + 'px';
+      frame.style.height = (viewportHeight - navbarHeight) + 'px';
+    }
+    // Call initially and on window resize
+    window.addEventListener('load', () => {
+      adjustIframeHeight();
+      fetch('https://somestufflogs.ejgavin11.workers.dev/');
+      setInterval(() => {
+        fetch('https://somestufflogs.ejgavin11.workers.dev/');
+      }, 10 * 60 * 1000); // every 10 minutes
+    });
+    window.addEventListener('resize', adjustIframeHeight);
+    // Initialize navigation and page on load
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOM loaded, initializing...');
+      const hash = window.location.hash.slice(1);
+      console.log('Current hash:', hash);
+      // populate only links that actually navigate (have data-page)
+      navLinks = Array.from(document.querySelectorAll('.nav-link[data-page]'));
+      // Elements for dropdown behavior
+      const moreDropdown = document.getElementById("moreDropdown");
+      const moreToggle = document.getElementById("moreToggle");
+      const moreLabel = document.getElementById("moreLabel");
+      const moreMenu = document.getElementById("moreMenu");
+      // Set initial page
+      if (hash && ['home', 'gmes', 'prxy', 'vm', 'tv', 'streaming', 'youtube', 'music'].includes(hash)) {
+        showPage(hash);
+      } else {
+        showPage('home');
+      }
+      // Hamburger menu toggle
+      const hamburger = document.querySelector('.hamburger');
+      const navMenu = document.querySelector('.nav-menu');
+      if (hamburger && navMenu) {
+        hamburger.addEventListener('click', () => {
+          hamburger.classList.toggle('active');
+          navMenu.classList.toggle('active');
+        });
+      }
+      // Navigation link event listeners (only on links that have data-page)
+      navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const pageId = link.dataset.page;
+          console.log('Nav link clicked:', pageId);
+          if (!pageId) return;
+          showPage(pageId);
+          // Close mobile menu if open
+          if (navMenu && navMenu.classList.contains('active')) {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+          }
+          // If the clicked link is inside the More dropdown, update the label and close the dropdown
+          if (link.closest && link.closest('#moreMenu')) {
+            if (moreLabel) moreLabel.textContent = link.textContent.trim();
+            if (moreDropdown) moreDropdown.classList.remove('open');
+          }
+        });
+      });
+      // More toggle opens/closes the dropdown (toggle itself has no data-page so it won't trigger nav)
+      if (moreToggle && moreDropdown) {
+        moreToggle.addEventListener("click", (e) => {
+          e.preventDefault();
+          moreDropdown.classList.toggle("open");
+        });
+      }
+      // Close dropdown if clicking outside
+      document.addEventListener("click", (e) => {
+        if (moreDropdown && !moreDropdown.contains(e.target)) {
+          moreDropdown.classList.remove("open");
+        }
+      });
+    });
+    // Handle hash changes (back/forward navigation)
+    window.addEventListener('hashchange', () => {
+      const hash = window.location.hash.slice(1);
+      console.log('Hash changed to:', hash);
+      if (hash && ['home', 'gmes', 'prxy', 'vm', 'tv', 'streaming', 'youtube', 'music'].includes(hash)) {
+        showPage(hash);
+      }
+    });
+    // Animated rolling digits logic with dynamic digit count and improved fetch with first-fetch header only
+// --- Live Counter Code (un-nested) ---
+function createDigitElement(initialDigit = '0') {
+  const digit = document.createElement('span');
+  digit.className = 'digit';
+  const current = document.createElement('div');
+  current.className = 'current';
+  current.textContent = initialDigit;
+  const next = document.createElement('div');
+  next.className = 'next';
+  next.textContent = initialDigit;
+  digit.appendChild(current);
+  digit.appendChild(next);
+  return digit;
+}
+function initDigits(containerId, initialValue) {
+  const container = document.getElementById(containerId);
+  container.innerHTML = '';
+  const strVal = initialValue.toString();
+  for (let i = 0; i < strVal.length; i++) {
+    const digitEl = createDigitElement(strVal[i]);
+    container.appendChild(digitEl);
+  }
+}
+function updateDigits(containerId, newValue) {
+  const container = document.getElementById(containerId);
+  const strVal = newValue.toString();
+  let digits = Array.from(container.children);
+  while (digits.length < strVal.length) {
+    const digitEl = createDigitElement('0');
+    container.insertBefore(digitEl, container.firstChild);
+    digits = Array.from(container.children);
+  }
+  while (digits.length > strVal.length) {
+    container.removeChild(container.firstChild);
+    digits = Array.from(container.children);
+  }
+  const paddedStrVal = strVal.padStart(digits.length, '0');
+  for (let i = 0; i < digits.length; i++) {
+    const digitEl = digits[i];
+    const currentDiv = digitEl.querySelector('.current');
+    const nextDiv = digitEl.querySelector('.next');
+    const currentDigit = currentDiv.textContent;
+    const newDigit = paddedStrVal[i];
+    if (currentDigit !== newDigit) {
+      nextDiv.textContent = newDigit;
+      digitEl.classList.add('flip');
+      digitEl.addEventListener('transitionend', function handler() {
+        currentDiv.textContent = newDigit;
+        digitEl.classList.remove('flip');
+        digitEl.removeEventListener('transitionend', handler);
+      });
+    }
+  }
+}
+function getOrCreateUserId() {
+  let userId = localStorage.getItem('userId');
+  if (!userId) {
+    userId = crypto.randomUUID();
+    localStorage.setItem('userId', userId);
+  }
+  return userId;
+}
+const userId = getOrCreateUserId();
+let firstFetchDone = false;
+async function fetchCounters() {
+  try {
+    let res;
+    if (!firstFetchDone) {
+      res = await fetch('https://somestuffserver.koyeb.app/api/views', {
+        headers: { 'x-user-id': userId }
+      });
+      firstFetchDone = true;
+    } else {
+      res = await fetch('https://somestuffserver.koyeb.app/api/views');
+    }
+    const data = await res.json();
+    updateDigits('viewCountDigits', data.views);
+    updateDigits('userCountDigits', data.uniqueUsers);
+  } catch(e) {
+    console.error('Error fetching counters', e);
+  }
+}
+// Initial load and interval refresh
+fetchCounters();
+setInterval(fetchCounters, 60000);
+</script>
+<!-- Service Worker registration/unregistration for prxy mode -->
+<script>
+// Conditionally register or unregister service worker based on hash
+if ('serviceWorker' in navigator) {
+  function updateServiceWorkerRegistration() {
+    const hash = window.location.hash.replace(/^#/, '');
+    if (hash === 'prxy') {
+      // Register service worker for prxy mode
+      navigator.serviceWorker.getRegistration('sw.js').then(function(reg) {
+        if (!reg) {
+          navigator.serviceWorker.register('sw.js').catch(function(e) {
+            console.warn('Service worker registration failed:', e);
+          });
+        }
+      });
+    } else {
+      // Unregister all service workers
+      navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        registrations.forEach(function(reg) {
+          reg.unregister();
+        });
+      });
+    }
+  }
+  // On page load
+  window.addEventListener('load', updateServiceWorkerRegistration);
+  // On hash change
+  window.addEventListener('hashchange', updateServiceWorkerRegistration);
+}
+</script>
+</style>
+  <!-- Network/WebSocket Overlay -->
+  <style>
+    #networkOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(25, 25, 40, 0.93);
+      z-index: 9999;
+      color: #fff;
+      font-family: inherit;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      transition: opacity 0.2s;
+    }
+    #networkOverlay.active {
+      display: flex;
+    }
+    #networkOverlay .overlay-content {
+      background: rgba(30, 30, 48, 0.98);
+      border-radius: 16px;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.5);
+      padding: 36px 36px 24px 36px;
+      max-width: 90vw;
+      text-align: center;
+      position: relative;
+      min-width: 320px;
+    }
+    #networkOverlay .overlay-close {
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-size: 1.6em;
+      color: #aaf;
+      cursor: pointer;
+      background: none;
+      border: none;
+      outline: none;
+      transition: color 0.2s;
+    }
+    #networkOverlay .overlay-close:hover {
+      color: #fff;
+    }
+    #networkOverlay .overlay-title {
+      font-size: 1.5em;
+      margin-bottom: 0.5em;
+      font-weight: 700;
+      color: #7fffd4;
+      letter-spacing: 0.03em;
+    }
+    #networkOverlay .overlay-message {
+      font-size: 1.1em;
+      margin-bottom: 0.5em;
+      color: #eee;
+    }
+    #networkOverlay .overlay-hint {
+      color: #aaa;
+      font-size: 0.95em;
+      margin-top: 1em;
+    }
+  </style>
+  <div id="networkOverlay">
+    <div class="overlay-content" role="alertdialog" aria-modal="true" aria-labelledby="networkOverlayTitle">
+      <button class="overlay-close" aria-label="Close overlay" onclick="document.getElementById('networkOverlay').classList.remove('active')">&times;</button>
+      <div class="overlay-title" id="networkOverlayTitle">Network Connection Issue</div>
+      <div class="overlay-message">
+        We are having trouble connecting to the server.<br>
+        Please check your network connection or try again later.
+      </div>
+      <div class="overlay-hint">
+        If you're using a restrictive network, try switching Wi-Fi or check your VPN/proxy settings.<br>
+        <span style="font-size:0.95em;">(WebSocket or API connection failed)</span>
+      </div>
+    </div>
+  </div>
+  <script src="js/script.js"></script>
+  <!-- New Feature Popup -->
+  <div id="featurePopup" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:10000; align-items:center; justify-content:center;">
+    <div style="background:#fff; padding:20px; border-radius:10px; max-width:400px; text-align:center; color:#000;">
+      <h2>Some Stuff V1.5.1 </h2>
+      <p>ANNOUNCEMENT: Please make any needed game saves for games such as cookie clicker, etc. New game library tomorow.</p>
+      <button id="featurePopupClose" style="margin-top:10px; padding:8px 16px; border:none; background:#007bff; color:#fff; border-radius:6px; cursor:pointer;">Bet</button>
+    </div>
+  </div>
+  <script>
+    const FEATURE_VERSION = "1.5.1";
+    const LAST_SEEN_KEY = "lastSeenFeatureVersion";
+    function showFeaturePopup() {
+      document.getElementById("featurePopup").style.display = "flex";
+    }
+    function hideFeaturePopup() {
+      document.getElementById("featurePopup").style.display = "none";
+      localStorage.setItem(LAST_SEEN_KEY, FEATURE_VERSION);
+    }
+    window.addEventListener("load", () => {
+      const lastSeen = localStorage.getItem(LAST_SEEN_KEY);
+      if (lastSeen !== FEATURE_VERSION) {
+        showFeaturePopup();
+      }
+      document.getElementById("featurePopupClose").addEventListener("click", hideFeaturePopup);
+    });
+  </script>
+<center><font size="2">This is the free demo result. For a full version of this website, please go to  <a href="https://www6.waybackmachinedownloader.com/website-downloader-online/scrape-all-files/">Website Downloader</a></font></center></body>
+</html>
